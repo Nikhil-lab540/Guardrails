@@ -3,3 +3,4 @@ nemoguardrails
 openai
 transformers
 torch
+langchain_groq
