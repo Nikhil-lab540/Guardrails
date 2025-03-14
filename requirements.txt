@@ -1,0 +1,5 @@
+streamlit
+nemoguardrails
+openai
+transformers
+torch

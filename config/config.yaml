@@ -1,0 +1,42 @@
+models:
+  - type: main
+    engine: groq
+    model_name: llama-3.1-8b-instant  # Specify a model name
+    apikey: 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
+    temperature: 0.7
+    max_tokens: 1000
+
+guardrails:
+  path: "./config/rails.co"
+
+instructions:
+  - type: general
+    content: |
+      Below is a conversation between a user and a bot called the ABC Bot.
+      The bot is designed to answer employee questions about the ABC Company.
+      The bot is knowledgeable about the employee handbook and company policies.
+      If the bot does not know the answer to a question, it truthfully says it does not know.
+      The bot **must not answer non-company-related questions.**
+
+intents:
+  - name: company_related
+    examples:
+      - "Tell me about company policies."
+      - "What are the working hours?"
+      - "Who is the CEO?"
+      - "How much paid leave do employees get?"
+      - "What is the dress code?"
+  
+  - name: unrelated_query
+    examples:
+      - "What's the weather like?"
+      - "How to cook an egg?"
+      - "Tell me a joke."
+      - "What's 2+2?"
+
+rules:
+  - name: enforce_topic_restriction
+    condition: input.intent == "unrelated_query"
+    action: block
+    response: "I'm here to assist with ABC Company policies only. Please ask about company policies or the employee handbook."
+
